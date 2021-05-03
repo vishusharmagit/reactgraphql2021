@@ -1,4 +1,31 @@
+import github from "./db.js";
+import {useEffect} from "react";
+
 function App() {
+  useEffect(() => {
+    const githubquery = {
+      query: `
+      {
+        viewer {
+          name
+        }
+      }
+      `,
+    };
+
+    fetch(github.baseURL, {
+      method: "POST",
+      headers: github.headers,
+      body: JSON.stringify(githubquery),
+    })
+    .then( response => response.json())
+    .then( data => {
+      console.log("data : ", data);
+    })
+    .catch( err => {
+      console.log("Error : ", err);
+    })
+  });
   return (
     <div className="App container mt-5">
       <h1 className="text-primary">
